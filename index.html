@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather app</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300&display=swap" rel="stylesheet">
+    <script src="js/all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main-section">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" name="search-city" id="search-input" placeholder="Nhập tên thành phố">
+                <i class="fa-solid fa-microphone"></i>
+            </div>
+            <div class="info-wrapper">
+                <p class="city-name">Ho chi minh
+                </p>
+                <p class="weather-state">Mua lon</p>
+                <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather-state" class="weather-icon">
+                <div class="temperature">26</div>
+            </div>
+        </div>
+        <div class="additional-section">
+            <div class="row">
+                <div class="item">
+                    <div class="lable">Feel like</div>
+                    <div class="value feelLike">6:16</div>
+                </div>
+                <div class="item">
+                    <div class="lable">Pressure in</div>
+                    <div class="value pressureIn">20</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="item">
+                    <div class="lable">Humidity</div>
+                    <div class="value humidity">73%</div>
+                </div>
+                <div class="item">
+                    <div class="lable">Wind speed   </div>
+                    <div class="value windSpeed">5.54 km/h</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/index.js"></script>
+</body>
+</html>
