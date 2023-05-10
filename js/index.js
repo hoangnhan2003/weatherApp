@@ -7,6 +7,7 @@ const feelLike = document.querySelector('.feelLike');
 const pressureIn = document.querySelector('.pressureIn');
 const humidity = document.querySelector('.humidity');
 const windSpeed = document.querySelector('.windSpeed');
+const container  = document.querySelector('.container');
 console.log(searchInput);
  const API_KEY = '436ad23e801d47d7a18184728230905';
 // async function getWeather(cityName) {
@@ -34,4 +35,83 @@ searchInput.addEventListener('change',(e)=> {
             console.log('Data',data);
         }
     );
-}) 
+})
+// tro ly ao
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+var recognition = new SpeechRecognition();
+// synth nay để nói
+const synth = window.speechSynthesis;
+// cai dat ngon ngu
+recognition.lang = 'vi-VI';
+// khi nói xong thì xử lí kết quả ngay
+recognition.continuous = false;
+
+const speak = (text) => {
+    if(synth.speaking){
+        console.log("Busy speaking....");
+        return;
+    }
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.onend = () => {
+        console.log('SpeechSynthesisUtterance onend');
+    }
+    utter.onerror = () => {
+        console.log('SpeechSynthesisUtterance on error');
+    }
+    synth.speak(utter);
+}
+const microphone = document.querySelector('.microphone');
+microphone.addEventListener('click',(e)=> {
+    e.preventDefault();
+    recognition.start();
+    microphone.classList.add('recording');
+});
+const handleVoice = (text) => {
+    const lowerText = text.toLowerCase();
+    if(lowerText.includes('thời tiết tại')){
+        const location = lowerText.split('tại')[1].trim();
+        console.log(location);
+        searchInput.value = location;
+        const changeEvent = new Event('change');
+        searchInput.dispatchEvent(changeEvent);
+        return;
+    }
+    if(lowerText.includes('thay đổi màu nền')){
+        const color = lowerText.split('màu nền')[1].trim();
+        console.log(color);
+        container.style.background = color;
+        return;
+    }
+    if(lowerText.includes('màu nền mặc định')){
+
+        container.style.background = '';
+        return;
+    }
+    if(lowerText.includes('thay đổi nội dung màu')){
+        const color = lowerText.split('màu')[1].trim();
+        container.style.color = color;
+        return;
+    }
+    if(lowerText.includes('mấy giờ')){
+        var toDay = new Date();
+        console.log(toDay.getHours()+ ' hours : '+ toDay.getMinutes()+ "minutes : "+ toDay.getSeconds()+" seconds: ");
+        speak(toDay.getHours()+ ' giờ : '+ toDay.getMinutes()+ " phút : "+ toDay.getSeconds()+" giây ");
+        return ;
+    }
+    
+    
+}
+recognition.onspeechend = () => {
+    recognition.stop();
+    microphone.classList.remove('recording');
+} 
+recognition.onerror = (error) => {
+    console.log('On error:',error);
+    microphone.classList.remove('recording');
+}
+recognition.onresult = (e)=> {
+    console.log('on result: ', e);
+    const text = e.results[0][0].transcript;
+    console.log(text);
+    handleVoice(text);
+}
